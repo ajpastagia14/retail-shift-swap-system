@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manager Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h2>ShiftSwap</h2>
+        <p>MANAGER</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/manager-dashboard" class="active">Dashboard</a>
+        <a href="/create-schedule">Create Schedule</a>
+        <a href="/swap-requests">Swap Requests</a>
+        <a href="/availability">Availability</a>
+        <a href="/employees">Employees</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div>
+          <p class="breadcrumb">Manager > Dashboard</p>
+          <h1>Dashboard</h1>
+        </div>
+        <div class="user-box">
+          <strong>{{ session.get('name', 'User') }}</strong>
+          <span>{{ session.get('email', 'No email') }}</span>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Shifts</h3>
+          <p>{{ total_shifts }}</p>
+        </div>
+        <div class="stat-card">
+          <h3>Pending Swaps</h3>
+          <p>{{ pending_swaps }}</p>
+        </div>
+        <div class="stat-card">
+          <h3>Approved Swaps</h3>
+          <p>{{ approved_swaps }}</p>
+        </div>
+        <div class="stat-card">
+          <h3>Rejected Swaps</h3>
+          <p>{{ rejected_swaps }}</p>
+        </div>
+      </div>
+
+      <div class="dashboard-sections">
+          <div class="activity-box">
+            <h2>Recent Activity</h2>
+            <ul>
+              {% if recent_activity %}
+                {% for item in recent_activity %}
+                <li>{{ item.message }}</li>
+                {% endfor %}
+              {% else %}
+                <li>No recent activity yet.</li>
+              {% endif %}
+            </ul>
+            
+          </div>
+
+        <div class="quick-box">
+          <h2>Quick Actions</h2>
+          <button onclick="window.location.href='/create-schedule'">Create Schedule</button>
+          <button onclick="window.location.href='/swap-requests'">Review Swaps</button>
+          <button onclick="window.location.href='/employees'">Manage Employees</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

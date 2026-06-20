@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retail Shift Swap System</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="login-container">
+    
+    <div class="left-panel">
+      <div class="icon-box">📅</div>
+      <h1>Retail Shift Swap<br />Management System</h1>
+      <p>
+        Streamline your workforce scheduling, manage shift swaps, and
+        track employee availability — all in one powerful platform.
+      </p>
+
+      <div class="feature-list">
+        <div class="feature-item">👥 Employee Management</div>
+        <div class="feature-item">🔄 Smart Shift Swapping</div>
+        <div class="feature-item">🔒 Secure & Reliable</div>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="form-box">
+       <h2>Welcome Back</h2>
+        <p class="subtitle">Sign in to access your dashboard and manage shifts</p>
+
+        <form action="/login" method="POST">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="your.email@company.com" required />
+
+        <label>Password</label>
+        <input type="password" name="password" placeholder="••••••••" required />
+
+        <div class="remember-row">
+          <label class="remember">
+            <input type="checkbox" />
+            Remember me
+          </label>
+         <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="signin-btn">Sign In</button>
+        </form>
+
+        <div class="divider"></div>
+
+          <p class="demo-text">New manager?</p>
+
+        <div class="portal-buttons">
+          <a href="/register-manager" class="secondary-btn" style="text-align:center; text-decoration:none;">Create Manager Account</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

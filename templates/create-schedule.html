@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Schedule</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h2>ShiftSwap</h2>
+        <p>MANAGER</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/manager-dashboard">Dashboard</a>
+        <a href="/create-schedule" class="active">Create Schedule</a>
+        <a href="/swap-requests">Swap Requests</a>
+        <a href="/availability">Availability</a>
+        <a href="/employees">Employees</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div>
+          <p class="breadcrumb">Manager > Schedule > Create</p>
+          <h1>Create Weekly Schedule</h1>
+        </div>
+            <div class="user-box">
+              <strong>{{ session['name'] }}</strong>
+              <span>{{ session['email'] }}</span>
+            </div>
+      </div>
+
+      <div class="table-card" style="margin-bottom: 24px;">
+        <h2 style="margin-bottom: 20px;">Add New Shift</h2>
+
+        <form action="/add-shift" method="POST" class="availability-form">
+          <select name="employee_id" required>
+            <option value="">Select Employee</option>
+            {% for emp in employees %}
+              <option value="{{ emp.id }}">{{ emp.name }}</option>
+            {% endfor %}
+          </select>
+
+          <input type="date" name="date" required>
+          <input type="time" name="start_time" required>
+          <input type="time" name="end_time" required>
+
+          <select name="skill" required>
+            <option value="">Select Skill</option>
+            <option value="Cashier">Cashier</option>
+            <option value="Floor Staff">Floor Staff</option>
+            <option value="Stock Room">Stock Room</option>
+          </select>
+
+          <button type="submit" class="primary-btn">Add Shift</button>
+        </form>
+      </div>
+
+      <div class="table-card">
+        <h2 style="margin-bottom: 20px;">Saved Shifts</h2>
+
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Date</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Skill</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if shifts %}
+              {% for shift in shifts %}
+              <tr>
+                <td>{{ shift.employee_name if shift.employee_name else "Unassigned" }}</td>
+                <td>{{ shift.date }}</td>
+                <td>{{ shift.start_time }}</td>
+                <td>{{ shift.end_time }}</td>
+                <td>{{ shift.skill }}</td>
+                <td>
+                  <a href="/delete-shift/{{ shift.id }}"
+                    style="color: red; text-decoration: none;"
+                    onclick="return confirm('Delete this shift?')">
+                    Delete
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="5" style="text-align: center; padding: 20px;">
+                  No shifts added yet.
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

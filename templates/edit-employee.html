@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Employee</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h2>ShiftSwap</h2>
+        <p>MANAGER</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/manager-dashboard">Dashboard</a>
+        <a href="/create-schedule">Create Schedule</a>
+        <a href="/swap-requests">Swap Requests</a>
+        <a href="/availability">Availability</a>
+        <a href="/employees" class="active">Employees</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div>
+          <p class="breadcrumb">Manager > Employees > Edit</p>
+          <h1>Edit Employee</h1>
+        </div>
+        <div class="user-box">
+          <strong>{{ session.get('name', 'User') }}</strong>
+          <span>{{ session.get('email', 'No email') }}</span>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <form action="/edit-employee/{{ employee.id }}" method="POST" style="display: flex; flex-direction: column; gap: 15px; max-width: 500px;">
+          
+          <input
+            type="text"
+            name="name"
+            value="{{ employee.name }}"
+            required
+            style="padding: 12px; border: 1px solid #d1d5db; border-radius: 10px;"
+          />
+
+          <input
+            type="email"
+            name="email"
+            value="{{ employee.email }}"
+            required
+            style="padding: 12px; border: 1px solid #d1d5db; border-radius: 10px;"
+          />
+
+          <input
+            type="text"
+            name="password"
+            value="{{ employee.password }}"
+            required
+            style="padding: 12px; border: 1px solid #d1d5db; border-radius: 10px;"
+          />
+
+          <input
+            type="text"
+            name="role"
+            value="{{ employee.role }}"
+            required
+            style="padding: 12px; border: 1px solid #d1d5db; border-radius: 10px;"
+          />
+
+          <input
+            type="text"
+            name="skill"
+            value="{{ employee.skill }}"
+            required
+            style="padding: 12px; border: 1px solid #d1d5db; border-radius: 10px;"
+          />
+
+          <select
+            name="status"
+            required
+            style="padding: 12px; border: 1px solid #d1d5db; border-radius: 10px;"
+          >
+            <option value="Active" {% if employee.status == "Active" %}selected{% endif %}>Active</option>
+            <option value="Inactive" {% if employee.status == "Inactive" %}selected{% endif %}>Inactive</option>
+          </select>
+
+          <button type="submit" class="primary-btn">Update Employee</button>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

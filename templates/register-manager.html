@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register Manager</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="login-container">
+    <div class="left-panel">
+      <div class="icon-box">👤</div>
+      <h1>Create Manager Account</h1>
+      <p>
+        Register a new manager profile to access dashboards, create schedules,
+        and manage shift swap requests.
+      </p>
+    </div>
+
+    <div class="right-panel">
+      <div class="form-box">
+        <h2>Manager Sign Up</h2>
+        <p class="subtitle">Create your manager profile</p>
+
+        <form action="/register-manager" method="POST">
+          <label>Full Name</label>
+          <input type="text" name="name" placeholder="Enter full name" required />
+
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="manager@company.com" required />
+
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Create password" required />
+
+          <button type="submit" class="signin-btn">Create Account</button>
+        </form>
+
+        <div class="divider"></div>
+
+        <div class="portal-buttons">
+          <a href="/" class="secondary-btn" style="text-align:center; text-decoration:none;">Back to Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

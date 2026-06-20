@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Availability</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h2>ShiftSwap</h2>
+        <p>EMPLOYEE</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/employee-dashboard">My Schedule</a>
+        <a href="/update-availability" class="active">Update Availability</a>
+        <a href="/request-swap">Request Swap</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div>
+          <p class="breadcrumb">Employee > Update Availability</p>
+          <h1>Update Availability</h1>
+        </div>
+        <div class="user-box">
+          <strong>{{ session.get('name', 'User') }}</strong>
+          <span>{{ session.get('email', 'No email') }}</span>
+        </div>
+      </div>
+
+      <div class="table-card" style="margin-bottom: 24px;">
+        <div class="employee-header" style="margin-bottom: 20px;">
+          <div>
+            <h2 style="margin-bottom: 6px;">Set Your Availability</h2>
+            <p style="color: #64748b; font-size: 14px;">
+              Update your available hours for scheduling
+            </p>
+          </div>
+        </div>
+
+        <form action="/save-availability" method="POST" class="availability-form">
+          <select name="day" required>
+            <option value="">Select Day</option>
+            <option>Monday</option>
+            <option>Tuesday</option>
+            <option>Wednesday</option>
+            <option>Thursday</option>
+            <option>Friday</option>
+            <option>Saturday</option>
+            <option>Sunday</option>
+          </select>
+
+          <input type="time" name="from_time" required />
+          <input type="time" name="to_time" required />
+
+          <button type="submit" class="primary-btn">Save Availability</button>
+        </form>
+      </div>
+
+      <div class="table-card">
+        <div class="employee-header" style="margin-bottom: 20px;">
+          <div>
+            <h2>Current Weekly Availability</h2>
+          </div>
+          <div style="color: #16a34a; font-weight: 600; font-size: 14px;">
+            {{ availability|length }} day(s) saved
+          </div>
+        </div>
+
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Day of Week</th>
+              <th>Available From</th>
+              <th>Available To</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if availability %}
+              {% for row in availability %}
+              <tr>
+                <td>{{ row.day }}</td>
+                <td>{{ row.from_time }}</td>
+                <td>{{ row.to_time }}</td>
+                <td>
+                  {% if row.status == "Available" %}
+                    <span class="status approved">Available</span>
+                  {% else %}
+                    <span class="status pending">{{ row.status }}</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="4" style="text-align: center; padding: 20px;">
+                  No availability set yet.
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

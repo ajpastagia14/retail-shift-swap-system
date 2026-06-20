@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Request Swap</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h2>ShiftSwap</h2>
+        <p>EMPLOYEE</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/employee-dashboard">My Schedule</a>
+        <a href="/update-availability">Update Availability</a>
+        <a href="/request-swap" class="active">Request Swap</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div>
+          <p class="breadcrumb">Employee > Request Swap</p>
+          <h1>Request Shift Swap</h1>
+        </div>
+        <div class="user-box">
+          <strong>{{ session.get('name', 'User') }}</strong>
+          <span>{{ session.get('email', 'No email') }}</span>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <h2 style="margin-bottom: 20px;">Submit New Swap Request</h2>
+
+        <form action="/submit-swap-request" method="POST" class="availability-form">
+          <select name="shift_id" required>
+            <option value="">Select Your Assigned Shift</option>
+            {% for shift in shifts %}
+              <option value="{{ shift.id }}">
+                {{ shift.date }} | {{ shift.start_time }} - {{ shift.end_time }} | {{ shift.skill }}
+              </option>
+            {% endfor %}
+          </select>
+
+          <select name="replacement_employee" required>
+            <option value="">Select Replacement Employee</option>
+            {% for emp in employees %}
+              <option value="{{ emp.name }}">{{ emp.name }}</option>
+            {% endfor %}
+          </select>
+
+          <input type="text" name="reason" placeholder="Reason for swap" required />
+
+          <button type="submit" class="primary-btn">Submit Request</button>
+        </form>
+      </div>
+
+      <div class="table-card">
+        <h2 style="margin-bottom: 20px;">My Swap Requests History</h2>
+
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Shift Details</th>
+              <th>Replacement</th>
+              <th>Reason</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if swap_history %}
+              {% for row in swap_history %}
+              <tr>
+                <td>
+                  {{ row.date }} | {{ row.start_time }} - {{ row.end_time }} | {{ row.skill }}
+                </td>
+                <td>{{ row.replacement_employee }}</td>
+                <td>{{ row.reason }}</td>
+                <td>{{ row.status }}</td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="4" style="text-align: center; padding: 20px;">
+                  No swap requests found.
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

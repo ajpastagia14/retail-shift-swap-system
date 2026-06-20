@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Availability</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h2>ShiftSwap</h2>
+        <p>MANAGER</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/manager-dashboard">Dashboard</a>
+        <a href="/create-schedule">Create Schedule</a>
+        <a href="/swap-requests">Swap Requests</a>
+        <a href="/availability" class="active">Availability</a>
+        <a href="/employees">Employees</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div>
+          <p class="breadcrumb">Manager > Availability</p>
+          <h1>Employee Availability</h1>
+        </div>
+          <div class="user-box">
+            <strong>{{ session['name'] }}</strong>
+            <span>{{ session['email'] }}</span>
+          </div>
+      </div>
+
+      <div class="table-card">
+        <h2 style="margin-bottom: 20px;">Employee Availability Records</h2>
+
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Day</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if availability_data %}
+              {% for row in availability_data %}
+              <tr>
+                <td>{{ row.employee_name }}</td>
+                <td>{{ row.day }}</td>
+                <td>{{ row.from_time }}</td>
+                <td>{{ row.to_time }}</td>
+                <td>{{ row.status }}</td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="5" style="text-align: center; padding: 20px;">
+                  No employee availability found.
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

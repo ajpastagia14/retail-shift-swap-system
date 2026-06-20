@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employee Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h2>ShiftSwap</h2>
+        <p>EMPLOYEE</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/employee-dashboard" class="active">My Schedule</a>
+        <a href="/update-availability">Update Availability</a>
+        <a href="/request-swap">Request Swap</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div>
+          <p class="breadcrumb">Employee > My Schedule</p>
+          <h1>My Schedule</h1>
+        </div>
+        <div class="user-box">
+          <strong>{{ session.get('name', 'User') }}</strong>
+          <span>{{ session.get('email', 'No email') }}</span>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Hours</h3>
+          <p>{{ total_hours }}</p>
+          <span>This week</span>
+        </div>
+        <div class="stat-card">
+          <h3>Shifts This Week</h3>
+          <p>{{ shift_count }}</p>
+          <span>Assigned shifts</span>
+        </div>
+        <div class="stat-card">
+          <h3>Pending Swaps</h3>
+          <p>{{ pending_swaps }}</p>
+          <span>Awaiting approval</span>
+        </div>
+        <div class="stat-card">
+          <h3>Days Off</h3>
+          <p>{{ days_off }}</p>
+          <span>This week</span>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="employee-header">
+          <h2>My Assigned Shifts</h2>
+        </div>
+
+        <div class="week-grid">
+          {% if shifts %}
+            {% for shift in shifts %}
+            <div class="day-card">
+              <h3>{{ shift.date }}</h3>
+              <p>{{ shift.start_time }} - {{ shift.end_time }}</p>
+              <span>{{ shift.skill }}</span>
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="day-card off-day" style="grid-column: 1 / -1; text-align: center;">
+              <h3>No shifts assigned yet</h3>
+              <p>Enjoy your time off</p>
+              <span>Your manager has not assigned any shifts yet.</span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

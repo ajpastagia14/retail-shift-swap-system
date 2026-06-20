@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swap Requests</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h2>ShiftSwap</h2>
+        <p>MANAGER</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/manager-dashboard">Dashboard</a>
+        <a href="/create-schedule">Create Schedule</a>
+        <a href="/swap-requests" class="active">Swap Requests</a>
+        <a href="/availability">Availability</a>
+        <a href="/employees">Employees</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div>
+          <p class="breadcrumb">Manager > Swap Requests</p>
+          <h1>Swap Requests Management</h1>
+        </div>
+        <div class="user-box">
+          <strong>{{ session.get('name', 'User') }}</strong>
+          <span>{{ session.get('email', 'No email') }}</span>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Shift Date & Time</th>
+              <th>Replacement</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if swap_requests_data %}
+              {% for row in swap_requests_data %}
+              <tr>
+                <td>{{ row.employee_name }}</td>
+                <td>{{ row.date }} | {{ row.start_time }} - {{ row.end_time }} | {{ row.skill }}</td>
+                <td>{{ row.replacement_employee }}</td>
+                <td>{{ row.reason }}</td>
+                <td>
+                  {% if row.status == "Approved" %}
+                    <span class="status approved">Approved</span>
+                  {% elif row.status == "Rejected" %}
+                    <span class="status rejected">Rejected</span>
+                  {% else %}
+                    <span class="status pending">Pending</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if row.status == "Pending" %}
+                    <a href="/approve-swap/{{ row.id }}"
+                       class="approve-btn"
+                       style="text-decoration: none; display: inline-block;">
+                      Approve
+                    </a>
+                    <a href="/reject-swap/{{ row.id }}"
+                       class="reject-btn"
+                       style="text-decoration: none; display: inline-block;">
+                      Reject
+                    </a>
+                  {% else %}
+                    <span style="color: #64748b;">No action needed</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 20px;">
+                  No swap requests found.
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
