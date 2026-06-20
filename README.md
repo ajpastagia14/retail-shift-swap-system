@@ -1,8 +1,8 @@
-# 🏪 Retail Shift Swap System
+#  Retail Shift Swap System
 
 A workforce management application developed to streamline employee scheduling, availability management, and shift exchange requests within retail environments.
 
-## 📌 Business Problem
+##  Business Problem
 
 Retail organizations often face scheduling conflicts, last-minute absences, and inefficient communication regarding shift changes. Manual processes can lead to operational disruptions, reduced employee satisfaction, and increased administrative workload.
 
@@ -10,7 +10,7 @@ This application provides a centralized platform that enables employees and mana
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 ### Employee Portal
 
@@ -30,7 +30,7 @@ This application provides a centralized platform that enables employees and mana
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Category        | Technologies          |
 | --------------- | --------------------- |
@@ -41,7 +41,7 @@ This application provides a centralized platform that enables employees and mana
 
 ---
 
-## 📊 Project Highlights
+##  Project Highlights
 
 * Designed and developed a full-stack workforce scheduling solution using Flask and SQLite.
 * Implemented role-based workflows for employees and managers.
@@ -51,7 +51,7 @@ This application provides a centralized platform that enables employees and mana
 
 ---
 
-## 💼 Business Impact
+##  Business Impact
 
 This solution helps organizations:
 
@@ -63,7 +63,7 @@ This solution helps organizations:
 
 ---
 
-## 🔧 Installation
+##  Installation
 
 ```bash
 git clone https://github.com/ajpastagia14/retail-shift-swap-system.git
@@ -87,7 +87,7 @@ http://127.0.0.1:5000
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
 Akshar Pastagia
 
